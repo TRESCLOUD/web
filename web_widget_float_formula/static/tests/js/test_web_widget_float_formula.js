@@ -11,8 +11,10 @@ odoo.define_section('web_widget_float_formula', ['web.form_common', 'web.form_wi
         var field_manager = new form_common.DefaultFieldManager(null, {});
         var filler = {'attrs': {}}; // Needed to instantiate FieldFloat 
         self.field = new form_widgets.FieldFloat(field_manager, filler);
-        self.$element = $('<input>');
-        self.field.$el.append(self.$element);
+        self.$element = $('<input id="o_field_input_5">');
+        self.field.$input = self.$element;
+        self.field.$el = self.$element;
+        self.field.$label = $('<label for="o_field_input_5" class="o_form_label" data-original-title="" title="">Test</label>');
     };
 
     test('Float fields should have a _formula_text property that defaults to an empty string',
@@ -131,7 +133,6 @@ odoo.define_section('web_widget_float_formula', ['web.form_common', 'web.form_wi
 
             assert.equal(this.$element.val(), 'test');
     });
-
     test('.start() on float fields should add a handler that calls ._compute_result() when the field is blurred',
         function(assert, form_common, form_widgets, core) {
             window.test_setup(this, form_common, form_widgets, core);
