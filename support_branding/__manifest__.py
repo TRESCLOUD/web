@@ -36,5 +36,5 @@
         "data/ir_config_parameter.xml",
         'views/qweb.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
