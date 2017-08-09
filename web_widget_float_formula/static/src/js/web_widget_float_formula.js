@@ -85,7 +85,7 @@ odoo.define('web_widget_float_formula', function(require) {
             _compute_result: function() {
                 this._clean_formula_text();
 
-                var formula = this._process_formula(this.$input.val());
+                var formula = this._process_formula(this.$el.val());
                 if (formula !== false) {
                     var value = this._eval_formula(formula);
                     if (value !== false) {
@@ -100,7 +100,7 @@ odoo.define('web_widget_float_formula', function(require) {
             // Display the formula stored in the field to allow modification
             _display_formula: function() {
                 if (this._formula_text !== '') {
-                    this.$input.val(this._formula_text);
+                    this.$el.val(this._formula_text);
                 }
             },
         });
