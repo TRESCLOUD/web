@@ -78,6 +78,7 @@ odoo.define('web.shortcut', function (require) {
 
     WebClient.include({
         current_action_updated: function (action) {
+            this._super.apply(this, arguments);
             if (this.menu.systray_menu) {
                 this.shortcut_menu = _.find(this.menu.systray_menu.widgets, function (item) {
                     return item instanceof ShortcutMenu;
