@@ -33,6 +33,19 @@ odoo.define('web_widget_float_formula', function(require) {
         var thousands_sep = translation_params.thousands_sep;
 
         var field_float = require('web.form_widgets').FieldFloat;
+        var field_monetary = require('web.form_widgets').FieldMonetary;
+
+        field_monetary.include({
+
+            initialize_content: function() {
+                this._super.apply(this, arguments);
+                if(!this.get('effective_readonly')) {
+                    this.setupFocus(this.$input);
+                }
+            },
+
+        });
+
         field_float.include({
             start: function() {
                 this.on('blurred', this, this._compute_result);
@@ -85,22 +98,26 @@ odoo.define('web_widget_float_formula', function(require) {
             _compute_result: function() {
                 this._clean_formula_text();
 
-                var formula = this._process_formula(this.$el.val());
-                if (formula !== false) {
-                    var value = this._eval_formula(formula);
-                    if (value !== false) {
-                        this._formula_text = "=" + formula;
-                        this.set_value(value);
-                        // Force rendering to avoid format loss if there's no change
-                        this.render_value();
+                if(!this.get('effective_readonly')) {
+                    var formula = this._process_formula(this.$input.val());
+                    if (formula !== false) {
+                        var value = this._eval_formula(formula);
+                        if (value !== false) {
+                            this._formula_text = "=" + formula;
+                            this.set_value(value);
+                            // Force rendering to avoid format loss if there's no change
+                            this.render_value();
+                            //Force trigger changed value to keep standard behaviour
+                            this.trigger('changed_value');
+                        }
                     }
                 }
             },
 
             // Display the formula stored in the field to allow modification
             _display_formula: function() {
-                if (this._formula_text !== '') {
-                    this.$el.val(this._formula_text);
+                if (this._formula_text !== '' && !this.get('effective_readonly')) {
+                    this.$input.val(this._formula_text);
                 }
             },
         });
