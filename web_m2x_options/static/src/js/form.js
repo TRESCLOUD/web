@@ -127,14 +127,22 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             var blacklist = this.get_search_blacklist();
             this.last_query = search_val;
 
-            var search_result = this.orderer.add(dataset.name_search(
-                search_val,
-                new data.CompoundDomain(
-                    self.build_domain(), [["id", "not in", blacklist]]),
-                'ilike', this.limit + 1,
-                self.build_context()));
+            function searcher (domain) {
+                return self.orderer.add(dataset.name_search(
+                    search_val,
+                    domain,
+                    'ilike', self.limit + 1,
+                    self.build_context()));
+                }
+            try {
+                var search_result = searcher(new data.CompoundDomain(
+                    self.build_domain(), [["id", "not in", blacklist]]));
+            // In search views sometimes the field domain cannot be evaluated
+            } catch (error) {
+                var search_result = searcher([["id", "not in", blacklist]]);
+            }
 
-            if (!(self.options && (self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit)))) {
+            if (self.options && (self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit))) {
                 this.create_rights = this.create_rights || (function(){
                 return new Model(self.field.relation).call(
                     "check_access_rights", ["create", false]);
@@ -405,6 +413,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         open_badge: function(ev){
             var self = this;
             var open = (self.options && self.is_option_set(self.options.open));
+            var no_color_picker = (self.options && self.is_option_set(self.options.no_color_picker));
             if(open){
                 self.mutex.exec(function(){
                     var id = parseInt($(ev.currentTarget).data('id'), 10);
@@ -415,6 +424,10 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         res_id: id,
                         target: "new"
                     });
+                }.bind(this));
+            }else if(no_color_picker){
+                self.mutex.exec(function(){
+                    return
                 }.bind(this));
             }else{
                 self.open_color_picker(ev);
