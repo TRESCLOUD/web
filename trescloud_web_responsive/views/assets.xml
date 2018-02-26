@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend_inh" name="Trescloud Open Mobile Assets" inherit_id="web_responsive.assets_backend">
+        <xpath expr=".">
+            <script type="application/javascript"
+                    src="/trescloud_web_responsive/static/src/js/trescloud_web_responsive.js"/>
+        </xpath>
+    </template>
+
+</odoo>

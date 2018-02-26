@@ -4,6 +4,10 @@
 header {
     margin: 0;
     padding: 0;
+    
+    @media print {
+        display: none;
+    }
 
     > .main-nav {
         display: block;
@@ -34,6 +38,13 @@ header {
                 .caret {
                     position: relative;
                     top: -3.5px;
+                }
+            }
+            .o_switch_company_menu {
+                .oe_topbar_name {
+                    @media (max-width: @screen-xs-max) {
+                        display: none;
+                    }
                 }
             }
             > .oe_systray > li > a {
