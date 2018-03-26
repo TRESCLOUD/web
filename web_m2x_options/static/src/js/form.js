@@ -141,8 +141,9 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             } catch (error) {
                 var search_result = searcher([["id", "not in", blacklist]]);
             }
-
-            if (self.options && (self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit))) {
+            
+            // TRESCLOUD: MANTENER ESTA LINEA, EVITAR MERGEAR DEBIDO A PROBLEMAS EN LA CREACION DE NUEVOS REGISTROS
+            if (!(self.options && (self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit)))) {
                 this.create_rights = this.create_rights || (function(){
                 return new Model(self.field.relation).call(
                     "check_access_rights", ["create", false]);
