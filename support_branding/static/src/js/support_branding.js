@@ -26,6 +26,7 @@ odoo.define('web.support_branding', function(require) {
         },
         show_error: function(error) {
             var self = this;
+            error['session'] = odoo.session_info;
             this._super.apply(this, arguments);
             jQuery('.support-branding-submit-form').each(function() {
                 var $form = jQuery(this),
