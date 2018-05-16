@@ -15,5 +15,5 @@ odoo.define('trescloud_web_responsive', function(require) {
             return;
         },
     });
-
+    
 });

@@ -2,9 +2,19 @@
 <odoo>
     <template id="assets_backend_inh" name="Trescloud Open Mobile Assets" inherit_id="web_responsive.assets_backend">
         <xpath expr=".">
+			<link rel="stylesheet" type="text/css" href="/trescloud_web_responsive/static/src/css/trescloud_web_responsive.css"/>
             <script type="application/javascript"
                     src="/trescloud_web_responsive/static/src/js/trescloud_web_responsive.js"/>
         </xpath>
     </template>
+
+    <template id="assets_frontend_inh" name="Trescloud Open Mobile Assets Frontend" inherit_id="web.assets_frontend">
+        <xpath expr=".">
+			<link rel="stylesheet" type="text/css" href="/trescloud_web_responsive/static/src/css/trescloud_web_responsive_frontend.css"/>
+            <script type="application/javascript"
+                    src="/trescloud_web_responsive/static/src/js/trescloud_web_responsive_frontend.js"/>
+        </xpath>
+    </template>
+
 
 </odoo>
