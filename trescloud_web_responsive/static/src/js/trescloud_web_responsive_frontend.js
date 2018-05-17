@@ -1,5 +1,4 @@
-/* Copyright 2016 LasLabs Inc.
- * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+/* Part of Odoo. See LICENSE file for full copyright and licensing details. */
 
 $(document).ready(function(){
 	if(/iPhone|iPad|iPod/i.test(navigator.userAgent) ) {
