@@ -1,5 +1,4 @@
-/* Copyright 2016 LasLabs Inc.
- * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+/* Part of Odoo. See LICENSE file for full copyright and licensing details. */
 
 odoo.define('trescloud_web_responsive', function(require) {
     'use strict';
@@ -15,5 +14,5 @@ odoo.define('trescloud_web_responsive', function(require) {
             return;
         },
     });
-
+    
 });

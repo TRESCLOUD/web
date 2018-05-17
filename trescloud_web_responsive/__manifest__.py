@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016-2017 LasLabs Inc.
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     "name": "Trescloud Web Responsive",
     "summary": "Prevent to search modules from 'Aplication' menu",
