@@ -1,3 +1,6 @@
+th.hidden-xs {
+	display: table-cell !important;
+}
 td.hidden-xs {
 	display: table-cell !important;
 }
