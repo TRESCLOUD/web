@@ -17,12 +17,7 @@ odoo.define('web_widget_float_formula', function(require) {
                 f = this.fields[f];
                 if (f.hasOwnProperty('_formula_text') && f.$el.find('input').length > 0) {
                     f._compute_result();
-                    // INICIO DEL CODIGO AGREGADO POR TRESCLOUD
-                    // Este codigo hace que se pierda la formula cuando hacemos
-                    // click fuera del treeview. Se hacen pruebas y no se
-                    // detecta ningun bug al comentar la linea
-                    //f._clean_formula_text();
-                    // FIN DEL CODIGO AGREGADO POR TRESCLOUD
+                    f._clean_formula_text();
                 }
             }
 
