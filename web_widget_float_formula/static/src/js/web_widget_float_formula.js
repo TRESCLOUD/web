@@ -33,6 +33,37 @@ odoo.define('web_widget_float_formula', function(require) {
         var thousands_sep = translation_params.thousands_sep;
 
         var field_float = require('web.form_widgets').FieldFloat;
+        // INICIO DEL CODIGO AGREGADO POR TRESCLOUD
+        // Se bindea el evento focus y blur para el widget monetary pues no
+        // se estaba disparando. AL parecer todos los widgets que tengan
+        // mas componentes que un input deben bindear contra el input
+        // ver por ejemplo el FieldDate
+        var field_monetary = require('web.form_widgets').FieldMonetary;
+        field_monetary.include({
+            initialize_content: function() {
+                this._super();
+                if (!this.get("effective_readonly")) {
+                    this.setupFocus(this.$input);
+                }
+            },
+            _compute_result: function() {
+
+                var input = this.$input.val();
+
+                var formula = this._process_formula(input);
+                if (formula !== false) {
+                    var value = this._eval_formula(formula);
+                    if (value !== false) {
+                        this._clean_formula_text();
+                        this._formula_text = "=" + formula;
+                        this.set_value(value);
+                        // Force rendering to avoid format loss if there's no change
+                        this.render_value();
+                    }
+                }
+            },
+        });
+        // FIN DEL CODIGO AGREGADO POR TRESCLOUD
         field_float.include({
             start: function() {
                 this._super();
