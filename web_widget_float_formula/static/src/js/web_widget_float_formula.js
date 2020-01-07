@@ -57,7 +57,7 @@ odoo.define('web_widget_float_formula', function(require) {
                         this._clean_formula_text();
                         this._formula_text = "=" + formula;
                         this.set_value(value);
-                        // Force rendering to avoid format loss if there's no change
+                        this.trigger('changed_value');
                         this.render_value();
                     }
                 }
