@@ -4,6 +4,10 @@ odoo.define('web_export_view', function (require) {
     var core = require('web.core');
     var Sidebar = require('web.Sidebar');
     var QWeb = core.qweb;
+    // INICIO DEL CODIGO ADICIONADO POR TRESCLOUD
+    var ajax = require('web.ajax');
+    var Dialog = require('web.Dialog');
+    // FIN DEL CODIGO ADICIONADO POR TRESCLOUD
 
     var _t = core._t;
 
@@ -14,9 +18,35 @@ odoo.define('web_export_view', function (require) {
             this._super.apply(this, arguments);
             if (self.getParent().ViewManager.active_view.type == 'list') {
                 self.$el.find('.o_dropdown').last().append(QWeb.render('WebExportTreeViewXls', {widget: self}));
-                self.$el.find('.export_treeview_xls').on('click', self.on_sidebar_export_treeview_xls);
+                // INICIO DEL CODIGO MODIFICADO POR TRESCLOUD
+                self.$el.find('.export_treeview_xls').on('click', function(){
+                    self.custom_on_sidebar_export_treeview_xls();
+                });
+                // FIN DEL CODIGO MODIFICADO POR TRESCLOUD
             }
         },
+        // INICIO DEL CODIGO ADICIONADO POR TRESCLOUD
+        /*
+        * Funcion que comprueba si el usuario logueado pertenece al grupo de
+        * seguridad "ecua_dependence_helper.web_export_view_export_group".
+        * IF prtenece simulamos un click al boton original que esta
+        * display:none, else mostramos dialogo de error.
+        */
+        custom_on_sidebar_export_treeview_xls: function () {
+            var self = this;
+            ajax.jsonRpc('/web/check/web_export_view/visibility', 'call', {
+            }).then(function (web_export_view_export_group) {
+                if(web_export_view_export_group){
+                    self.on_sidebar_export_treeview_xls();
+                }
+                else{
+                    Dialog.alert(self, 'Solo los usuarios que pertenecen al grupo "Derechos de exportación de vistas lista", pueden realizar esta operación.', {
+                        title: 'Advertencia',
+                    });
+                }
+            });
+        },
+        // FIN DEL CODIGO ADICIONADO POR TRESCLOUD
 
         on_sidebar_export_treeview_xls: function () {
             // Select the first list of the current (form) view
